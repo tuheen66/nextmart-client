@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const form = useForm({
@@ -25,6 +27,13 @@ const LoginForm = () => {
   });
 
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
+
+  const searchParams = useSearchParams();
+
+  //! check if the url has searchparams 'redirectPath' and get it
+  const redirect = searchParams.get("redirectPath");
+
+  const router = useRouter();
 
   // to get the loading state
   const {
@@ -48,6 +57,13 @@ const LoginForm = () => {
       const res = await loginUser(data);
       if (res?.success) {
         toast.success(res?.message);
+
+        //? if redirectPath is available then redirect to that path else redirect to profile page
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/profile");
+        }
       } else {
         toast.error(res?.message);
       }
@@ -95,7 +111,7 @@ const LoginForm = () => {
           />
           <div className="flex justify-center mt-5">
             <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY || ""}
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY!}
               onChange={handleReCaptcha}
             />
           </div>

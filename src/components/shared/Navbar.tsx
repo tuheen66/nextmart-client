@@ -1,9 +1,42 @@
+"use client";
 import Logo from "@/assets/svgs/Logo";
 
 import { Button } from "../ui/button";
-import { Heart, ShoppingBag } from "lucide-react";
+import { Heart, LogOut, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { logout } from "@/services/AuthService";
+import { useUser } from "@/context/UserContext";
+import { usePathname, useRouter } from "next/navigation";
+import { protectedRoutes } from "@/constants";
 
 export default function Navbar() {
+  //! getting the user info
+  const { user, setIsLoading } = useUser();
+
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    setIsLoading(true);
+
+    //* checking if the current path is included in private routes after logout then redirect to Homepage
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
+  };
+
   return (
     <header className="border-b w-full">
       <div className="container flex justify-between items-center mx-auto h-16 px-3">
@@ -26,8 +59,46 @@ export default function Navbar() {
             <ShoppingBag />
           </Button>
 
-          <Button>Login</Button>
-          <Button>Create Shop</Button>
+          {user ? (
+            <>
+              <Link href="/create-shop">
+                <Button className="rounded-full" variant="outline">
+                  Create Shop
+                </Button>
+              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className="rounded-full">
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>User</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>My Shop</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="bg-red-500 text-white rounded-full cursor-pointer"
+                    onClick={handleLogout}
+                  >
+                    <LogOut />
+                    <span>Log Out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button className="rounded-full" variant="outline">
+                  Login
+                </Button>
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>
