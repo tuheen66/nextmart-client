@@ -23,10 +23,10 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             product?.imageUrls[0] ||
             "https://psediting.websites.co.in/obaju-turquoise/img/product-placeholder.png"
           }
-          width={500}
-          height={500}
+          width={300}
+          height={300}
           alt="product image"
-          className="rounded-sm h-48 object-cover"
+          className="rounded-sm h-42 object-cover"
         />
         {product?.stock === 0 && (
           <div className="absolute left-2 top-0 bg-red-500 text-white px-2 rounded-full">
@@ -35,7 +35,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         )}
       </CardHeader>
 
-      <CardContent className=" p-0 mt-2">
+      <CardContent className=" p-0 mt-6">
         <Link href={`/products/${product?._id}`} passHref>
           <CardTitle
             title={product?.name}
@@ -52,12 +52,12 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             {product?.offerPrice ? (
               <>
                 <span className="font-semibold mr-2 text-orange-400">
-                  $ {product?.offerPrice}
+                  $ {product?.offerPrice.toFixed(2)}
                 </span>
-                <del className="font-semibold text-xs">$ {product?.price}</del>
+                <del className="font-semibold text-xs">$ {product?.price.toFixed(2)}</del>
               </>
             ) : (
-              <span className="font-semibold">$ {product?.price}</span>
+              <span className="font-semibold">$ {product?.price.toFixed(2)}</span>
             )}
           </p>
 

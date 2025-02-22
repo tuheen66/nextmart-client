@@ -36,7 +36,7 @@ import { toast } from "sonner";
 import { ICategory } from "@/types";
 import { IBrand } from "@/types/brand";
 import { getAllBrands } from "@/services/Brand/Index";
-import { addProduct } from "@/services/Category/Product";
+import { addProduct } from "@/services/Product";
 
 export default function AddProductsForm() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);

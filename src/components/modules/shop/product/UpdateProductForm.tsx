@@ -36,11 +36,10 @@ import { getAllCategories } from "@/services/Category";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { getAllBrands } from "@/services/Brand/Index";
-import { updateProduct } from "@/services/Category/Product";
+import { updateProduct } from "@/services/Product";
 import { IProduct } from "@/types/product";
 import { ICategory } from "@/types";
 import { IBrand } from "@/types/brand";
-
 
 export default function UpdateProductForm({ product }: { product: IProduct }) {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
