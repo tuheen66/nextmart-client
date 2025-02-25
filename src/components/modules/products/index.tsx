@@ -9,7 +9,7 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
         <FilterSidebar />
         </div>
       <div>
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {products?.map((product: IProduct, idx: number) => (
             <ProductCard key={idx} product={product} />
           ))}

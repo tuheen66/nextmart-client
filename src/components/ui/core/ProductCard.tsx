@@ -9,15 +9,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { addProduct } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
+
 import { IProduct } from "@/types";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
+  const dispatch = useAppDispatch();
+
+  const handleAddProduct = (product: IProduct) => [
+    dispatch(addProduct(product)),
+  ];
+
   return (
     <Card className="p-3">
-      <CardHeader className="relative p-0 h-48">
+      <CardHeader className="relative p-0 h-60">
         <Image
           src={
             product?.imageUrls[0] ||
@@ -26,7 +35,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           width={300}
           height={300}
           alt="product image"
-          className="rounded-sm h-42 object-cover"
+          className="rounded-sm h-42 object-contain"
         />
         {product?.stock === 0 && (
           <div className="absolute left-2 top-0 bg-red-500 text-white px-2 rounded-full">
@@ -35,7 +44,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         )}
       </CardHeader>
 
-      <CardContent className=" p-0 mt-6">
+      <CardContent className=" p-0 mt-12">
         <Link href={`/products/${product?._id}`} passHref>
           <CardTitle
             title={product?.name}
@@ -52,12 +61,16 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             {product?.offerPrice ? (
               <>
                 <span className="font-semibold mr-2 text-orange-400">
-                  $ {product?.offerPrice.toFixed(2)}
+                  BDT {product?.offerPrice.toFixed(2)}
                 </span>
-                <del className="font-semibold text-xs">$ {product?.price.toFixed(2)}</del>
+                <del className="font-semibold text-xs">
+                  BDT {product?.price.toFixed(2)}
+                </del>
               </>
             ) : (
-              <span className="font-semibold">$ {product?.price.toFixed(2)}</span>
+              <span className="font-semibold">
+                BDT {product?.price.toFixed(2)}
+              </span>
             )}
           </p>
 
@@ -81,6 +94,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             Buy Now
           </Button>
           <Button
+            onClick={() => handleAddProduct(product)}
             disabled={product?.stock === 0}
             variant="outline"
             size="sm"
