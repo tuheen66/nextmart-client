@@ -35,7 +35,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { ICategory } from "@/types";
 import { IBrand } from "@/types/brand";
-import { getAllBrands } from "@/services/Brand/Index";
+import { getAllBrands } from "@/services/Brand";
 import { addProduct } from "@/services/Product";
 
 export default function AddProductsForm() {

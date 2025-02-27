@@ -1,6 +1,6 @@
 "use client";
 import { NMTable } from "@/components/ui/core/NMTable/index";
-import { deleteBrand } from "@/services/Brand/Index";
+
 import { IBrand } from "@/types/brand";
 import { ColumnDef } from "@tanstack/react-table";
 import { Trash } from "lucide-react";
@@ -10,6 +10,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import CreateBrandModal from "./CreateBrandModal";
 import DeleteConfirmationModal from "@/components/ui/core/NMModal/DeleteConfirmationModal";
+import { deleteBrand } from "@/services/Brand";
 
 const ManageBrands = ({ brands }: { brands: IBrand[] }) => {
   const [isModalOpen, setModalOpen] = useState(false);

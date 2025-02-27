@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import NMContainer from "@/components/ui/core/NMContainer";
-import { getAllBrands } from "@/services/Brand/Index";
+import { getAllBrands } from "@/services/Brand";
 import { IBrand } from "@/types/brand";
 import Image from "next/image";
 import Link from "next/link";

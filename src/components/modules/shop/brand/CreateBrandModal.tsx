@@ -20,7 +20,7 @@ import ImagePreviewer from "@/components/ui/core/NMImageUploader/ImagePreviewer"
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
 import { useState } from "react";
 import { toast } from "sonner";
-import { createBrand } from "@/services/Brand/Index";
+import { createBrand } from "@/services/Brand";
 
 
 const CreateBrandModal = () => {

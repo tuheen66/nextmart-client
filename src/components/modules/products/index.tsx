@@ -5,9 +5,9 @@ import FilterSidebar from "./filterSidebar";
 const AllProducts = ({ products }: { products: IProduct[] }) => {
   return (
     <div className="flex gap-8 my-10">
-      <div>
+      <div className="w-full max-w-sm">
         <FilterSidebar />
-        </div>
+      </div>
       <div>
         <div className="grid grid-cols-3 gap-8">
           {products?.map((product: IProduct, idx: number) => (

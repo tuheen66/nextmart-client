@@ -35,7 +35,7 @@ import { getAllCategories } from "@/services/Category";
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { getAllBrands } from "@/services/Brand/Index";
+import { getAllBrands } from "@/services/Brand";
 import { updateProduct } from "@/services/Product";
 import { IProduct } from "@/types/product";
 import { ICategory } from "@/types";

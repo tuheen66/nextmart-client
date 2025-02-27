@@ -1,11 +1,40 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartSlice from "./features/cartSlice";
+import cartReducer from "./features/cartSlice";
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+
+import storage from "./storage";
+
+//* we need to create noopStorage => redux/storage.ts
+
+
+//* configuring redux-persistor
+const persistOptions = {
+  key: "cart",
+  storage,
+};
+
+const persistedCart = persistReducer(persistOptions, cartReducer);
+//* next got to store provider
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      cart: cartSlice,
+      cart: persistedCart,
     },
+    middleware: (getDefaultMiddleware: any) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
   });
 };
 
